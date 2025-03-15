@@ -1,10 +1,10 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("./config/database");
-const carrosRoutes = require("./routes/carros");
-const clientesRoutes = require("./routes/clientes");
-const reservasRoutes = require("./routes/reservas");
-const authRoutes = require("./routes/auth");
+const carrosRoutes = require("./routes/carrosRoute");
+const clientesRoutes = require("./routes/clientesRoute");
+const reservasRoutes = require("./routes/reservasRoute");
+const authRoutes = require("./routes/authRoute");
 const authMiddleware = require("./middlewares/authMiddleware");
 dotenv.config();
 const app = express();
