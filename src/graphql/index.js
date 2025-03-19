@@ -1,4 +1,3 @@
-// src/graphql/index.js
 const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
 const schema = require("./schema");
@@ -9,11 +8,11 @@ const router = express.Router();
 
 router.use(
   "/graphql",
-  authMiddleware, // Apply authentication middleware here
+  authMiddleware,
   graphqlHTTP({
     schema: schema,
     rootValue: resolvers,
-    graphiql: true, // Enable GraphiQL for testing
+    graphiql: true,
   })
 );
 

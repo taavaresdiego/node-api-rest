@@ -2,18 +2,28 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const UsuarioSchema = new mongoose.Schema({
-  nome: String,
-  email: { type: String, unique: true },
-  senha: String,
-  // opcional: clientes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Cliente" }]
+const usuarioSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
 });
 
 // Middleware para criptografar a senha antes de salvar
-UsuarioSchema.pre("save", async function (next) {
-  if (!this.isModified("senha")) return next();
-  this.senha = await bcrypt.hash(this.senha, 10);
+usuarioSchema.pre("save", async function (next) {
+  // Correto: usuarioSchema
+  if (!this.isModified("password")) return next(); // Correto: password
+  this.password = await bcrypt.hash(this.password, 10); // Correto: password
   next();
 });
 
-module.exports = mongoose.model("Usuario", UsuarioSchema);
+module.exports = mongoose.model("Usuario", usuarioSchema); // Correto: usuarioSchema

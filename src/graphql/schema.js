@@ -1,8 +1,7 @@
 // src/graphql/schema.js
 const { buildSchema } = require("graphql");
 
-const schema = buildSchema(`
-  type Carro {
+const schema = buildSchema(`type Carro {
     id: ID!
     modelo: String!
     marca: String!
