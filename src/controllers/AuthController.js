@@ -1,11 +1,12 @@
-const Usuario = require("../models/Usuario");
+const Usuario = require("../models/Usuario"); // Added this line
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-module.exports = {
-  registrar: async (req, res) => {
-    const { nome, email, senha } = req.body;
+
+const AuthController = {
+  registrar: async (req, res, hashedPassword) => {
     try {
-      const usuario = new Usuario({ nome, email, senha });
+      const { name, email } = req.body;
+      const usuario = new Usuario({ name, email, password: hashedPassword });
       await usuario.save();
       res.status(201).json({ mensagem: "Usuário registrado com sucesso!" });
     } catch (error) {
@@ -15,9 +16,10 @@ module.exports = {
     }
   },
   login: async (req, res) => {
-    const { email, senha } = req.body;
+    const { email, password } = req.body; // Changed senha to password
     const usuario = await Usuario.findOne({ email });
-    if (!usuario || !(await bcrypt.compare(senha, usuario.senha))) {
+    if (!usuario || !(await bcrypt.compare(password, usuario.password))) {
+      // Changed senha to password
       return res.status(400).json({ mensagem: "Credenciais inválidas" });
     }
     const token = jwt.sign({ id: usuario._id }, process.env.JWT_SECRET, {
@@ -26,3 +28,4 @@ module.exports = {
     res.json({ token });
   },
 };
+module.exports = AuthController;

@@ -1,9 +1,18 @@
+// src/routes/carrosRoute.js
 const express = require("express");
 const router = express.Router();
-const CarrosController = require("../controllers/carrosController");
+const Carro = require("../models/Carro"); // Import the Carro model
 
-router.get("/", CarrosController.listarCarros);
-router.post("/", CarrosController.criarCarro);
-router.put("/:id", CarrosController.atualizarCarro);
-router.delete("/:id", CarrosController.deletarCarro);
+// Example route (adjust to your actual routes)
+router.get("/", async (req, res) => {
+  try {
+    const carros = await Carro.find();
+    res.json(carros);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// ... other routes ...
+
 module.exports = router;
