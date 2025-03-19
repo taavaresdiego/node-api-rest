@@ -1,4 +1,4 @@
-const Carro = require("../models/Carro");
+const Carro = require("../models/carro");
 module.exports = {
   listarCarros: async (req, res) => {
     const carros = await Carro.find();

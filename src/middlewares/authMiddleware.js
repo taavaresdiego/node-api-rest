@@ -19,14 +19,13 @@ const authMiddleware = (req, res, next) => {
     return res.status(401).json({ message: "Token mal formatado" });
   }
 
-  jwt.verify(token, process.env.SECRET, (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       return res.status(401).json({ message: "Token inválido" });
     }
-
     req.userId = decoded.id;
-    return next();
-  });
-};
+    next();
+  })
+}
 
 module.exports = authMiddleware;
